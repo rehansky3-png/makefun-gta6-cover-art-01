@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leonida Cover Maker — GTA VI-style cover art</title>
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<header class="top">
+  <div>
+    <h1>LEONIDA <span>COVER MAKER</span></h1>
+    <p>Turn any photo into GTA VI-style cover art. Runs offline — your photos never leave this device.</p>
+  </div>
+  <p class="tag">GRAND THEFT AUTO VI · LEONIDA</p>
+</header>
+<main class="app">
+  <section class="controls" aria-label="Cover controls">
+    <h2>1 · Your photos</h2>
+    <label class="file">Add photos
+      <input id="photo" type="file" accept="image/*" multiple>
+    </label>
+    <p class="hint">The first photo fills the hero panel. Click a panel on the cover, then a photo below, to place it.</p>
+
+    <h2>2 · Panels</h2>
+    <p id="panel-name" class="panel-name">Panel 1 · Hero</p>
+    <div id="panel-list" class="panel-list" role="group" aria-label="Panels"></div>
+    <div class="row">
+      <label><input type="radio" name="source" value="scene" checked> Built-in scene</label>
+      <label><input type="radio" name="source" value="photo"> Photo</label>
+    </div>
+    <label class="field">Scene
+      <select id="scene"></select>
+    </label>
+    <div id="photo-row" class="photo-row"></div>
+    <label class="field">Zoom
+      <input id="zoom" type="range" min="100" max="300" value="100">
+    </label>
+    <p class="hint">Drag the cover to move the selected panel's picture.</p>
+    <button id="shuffle" type="button" class="ghost">Shuffle scenes</button>
+
+    <h2>3 · Words</h2>
+    <label class="field">Caption
+      <input id="caption" type="text" maxlength="40" value="SUNSET HEIST">
+    </label>
+    <label class="field">Subtitle
+      <input id="subtitle" type="text" maxlength="48" value="LUCIA &amp; JASON · LEONIDA">
+    </label>
+
+    <h2>4 · Grade</h2>
+    <div class="swatches" role="group" aria-label="Colour grade">
+      <button type="button" data-grade="sunset" class="sw sunset active">Sunset</button>
+      <button type="button" data-grade="neon" class="sw neon">Neon Nights</button>
+      <button type="button" data-grade="vice" class="sw vice">Vice Teal</button>
+      <button type="button" data-grade="golden" class="sw golden">Golden Hour</button>
+    </div>
+
+    <h2>5 · Size &amp; export</h2>
+    <div class="sizes" role="group" aria-label="Export size">
+      <button type="button" data-size="square" class="active">Square 1080×1080</button>
+      <button type="button" data-size="portrait">Portrait 1080×1350</button>
+      <button type="button" data-size="story">Story 1920×1080</button>
+    </div>
+    <button id="export" type="button" class="primary">Export PNG</button>
+    <p id="status" role="status"></p>
+  </section>
+  <section class="preview" aria-label="Cover preview">
+    <canvas id="cover" width="1080" height="1080" aria-label="The cover"></canvas>
+    <p class="fine">All art is drawn in code — no Rockstar logos, artwork or fonts.
+      Display font: Bebas Neue (SIL Open Font License). Sample photos: kit samples, free to use.</p>
+  </section>
+</main>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>

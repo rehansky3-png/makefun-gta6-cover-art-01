@@ -1,60 +1,68 @@
-# Leonida Cover Maker — GTA VI-style cover art
+# Leonida Cover Maker
 
-A make.fun entry for **gta6-cover-art-01** ("Make GTA 6 Cover Art").
+An offline web app that turns any photo and a caption into GTA VI-style
+cover art — the multi-panel poster look with bold Bebas Neue lettering and a
+Vice City sunset or neon grade — exported as a PNG to share. Everything runs
+from static files in `app/`; photos are read on your own machine and never
+uploaded.
 
-Turn any photo and a caption into GTA VI-style cover art — the multi-panel
-poster look with bold lettering and a Vice City sunset / neon grade — and export
-it as a PNG to share. Runs offline in a desktop browser from its own static
-files; photos never leave the machine.
-
-## What it does
-
-- **Six-panel cover**: a hero panel plus five scene panels, GTA-poster style,
-  with a `GRAND THEFT AUTO VI · LEONIDA` title band and a big caption band.
-- **Any photo**: upload up to 6 photos, click a panel to select it, then place a
-  photo in it — drag to position, zoom slider, per-panel crop. Or leave the
-  panels on the built-in art.
-- **Art drawn in code**: all six built-in scenes (Sunset Skyline, Lucia &
-  Jason, Vice Beach, Leonida Swamps, Neon Street, Flamingo Dusk) are painted
-  by `app/src/art.js` with canvas shapes and gradients. No Rockstar logo,
-  artwork, character or font anywhere.
-- **Caption + subtitle** in the genre's condensed lettering (Bebas Neue, SIL
-  Open Font License, vendored under `app/fonts/`).
-- **Four colour grades**: Sunset, Neon Nights, Vice Teal, Golden Hour.
-- **Three post sizes, one click each**: Square 1080×1080, Portrait 1080×1350,
-  Story 1920×1080 — exported as PNG.
-- **Shuffle** randomises the built-in scenes across the panels.
-
-## Try it
+## How to use it
 
 ```sh
-node serve.ts
-# open http://localhost:8080
+# serve app/ with any static server, then open it in a desktop browser
+node serve.ts            # or: python3 -m http.server -d app 8080
 ```
 
-## Hand it in
+1. Pick one of six Leonida scenes (Boulevard Sunset, Pier Dusk, Skyline
+   Night, Swamp Dawn, Beach Day, Neon Street) — every one is painted in code
+   on a canvas, no photograph and no Rockstar artwork.
+2. Pick a layout: Four Panel, Hero + Three, Nine Panel, or Full Bleed.
+3. Load a photo into a panel (click a panel to select it, then Upload, or
+   Fill all panels with one photo). Drag a photo to move it, scroll to zoom,
+   or use the zoom slider. Two sample photos are included to try it with.
+4. Write the title and subtitle, set the title size and position.
+5. Pick a colour grade (Sunset, Neon, Vice, Noir) and toggle film grain and
+   vignette.
+6. Pick a post size — 1080 × 1080, 1080 × 1350 or 1920 × 1080 — and hit
+   Export PNG. The preview is exactly what the PNG holds.
+
+Your choices are remembered in the browser (localStorage); photos are not
+stored anywhere.
+
+## How it is built
+
+- `app/index.html` + `app/styles.css` — the editor.
+- `app/app.js` — state, the four layouts, the photo panels (cover-fit, zoom
+  and pan per panel), the cover render pipeline and the export.
+- `app/scenes.js` — the six procedural scenes: gradients, sun glow, palm
+  silhouettes, building rows with lit windows, neon signs, fog, water
+  glitter. Each scene is drawn at whatever resolution the cover needs.
+- `app/grades.js` — the four grades (canvas filter plus top and bottom
+  colour washes), the vignette and the seeded film grain.
+- `app/fonts/BebasNeue-Regular.ttf` — Bebas Neue under the SIL Open Font
+  License (`app/fonts/OFL.txt` beside it).
+- `app/samples/boulevard.jpg`, `app/samples/pier.jpg` — the two sample
+  photos the kit ships for entrants to use, made with an image model for
+  make.fun and free to use. No real person, no Rockstar artwork.
+- `main.ts` — the entry program: copies `app/` and `screenshots/` to
+  `/output` and writes `/output/dossier.json` with the vendored make.fun
+  library (`vendor/makefun-app.ts`, the kit's copy, unchanged).
+
+Run it yourself:
 
 ```sh
 mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts
-# then: makefun check --kit <kit> --repo . --worktree
 ```
 
-## Layout
+## Files
 
-- `main.ts` — the entry program (Node 22, stdlib only): copies `app/` and
-  `screenshots/` to `/output` and writes `dossier.json`.
-- `app/` — the web app (static files, no network requests):
-  `index.html`, `style.css`, `src/main.js` (editor), `src/cover.js`
-  (layout, title, caption, grades), `src/art.js` (the drawn scenes),
-  `src/shots.js` (fixed scenes for screenshots), `fonts/` (Bebas Neue, OFL),
-  `samples/` (the kit's free-to-use sample photos, used only to demo the
-  photo feature in the editor screenshot).
-- `screenshots/` — 4 screenshots: the exported covers and the editor with a
-  photo loaded.
-- `vendor/makefun-app.ts` — the kit's dossier library, unchanged.
-- `shots.json` — the screenshot scenes.
+- `main.ts` — the entry program (Node 22, standard library only).
+- `app/` — the whole web app, static files only, no network request.
+- `screenshots/` — 4 screenshots: the wide cover the app exported, the
+  editor with a photo loaded, a portrait neon cover, and a square mosaic
+  cover.
+- `LICENSE` — MIT.
 
-## License
-
-MIT (see `LICENSE`). Font: Bebas Neue © Dharma Type, SIL Open Font License
-1.1 (`app/fonts/OFL.txt`).
+[![make.fun · gta6-cover-art-01](https://make.fun/badge/gta6-cover-art-01.svg)](https://make.fun/bounty/gta6-cover-art-01?utm_source=github&utm_medium=readme&utm_campaign=gta6-cover-art-01)
+[![rank](https://make.fun/badge/gta6-cover-art-01/rehansky3-png/makefun-gta6-cover-art-01/rank.svg)](https://make.fun/bounty/gta6-cover-art-01/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=gta6-cover-art-01)
+[![reward](https://make.fun/badge/gta6-cover-art-01/rehansky3-png/makefun-gta6-cover-art-01/reward.svg)](https://make.fun/bounty/gta6-cover-art-01?utm_source=github&utm_medium=readme&utm_campaign=gta6-cover-art-01)
